@@ -1,0 +1,36 @@
+START HERE - NEXUS GRID
+======================
+
+1. Put this whole "NexusGrid" folder in your Documents folder, so you end up with:
+       Documents\NexusGrid\game_launcher.py
+   (It works from anywhere, but Documents\NexusGrid is where it keeps everything.)
+
+2. Double-click "Start Nexus Grid.bat".
+   - If Python 3.10 or newer isn't installed, it asks first, then downloads and installs
+     Python 3.13.16 from python.org for you (your user only, no administrator needed, about 30 MB).
+     It checks the download is signed by the Python Software Foundation before running it.
+     Say No and it shows where to get Python yourself.
+   - The first start then installs what the launcher needs (PySide6, psutil) - a minute or two.
+   - Windows 10/11, 64-bit.
+
+3. Add your games:
+   - drop game folders into the Games folder and press Scan, or
+   - use "+ Add game" > "Import games from a folder".
+
+4. Big Picture mode: press F10 (or the Big Picture button). Xbox-style home:
+   - D-pad: Up reaches the icon bar (Profile, Games, Apps, Search, Settings), Down the shortcut tiles.
+   - Click the RIGHT STICK (or press Tab) for the side panel: Profile, Friends, Messages, Games, Apps, Settings...
+   - Click your avatar (top-left) for your Profile: bio, title, G score and level, achievements, activity feed,
+     stats charts, badges and titles, a showcase, weekly goals and a Year in Review.
+   - The magnifier in the icon bar searches; text entry uses an on-screen keyboard.
+   - Anything marked SOON is a placeholder: press A on it to open its entry on the Roadmap
+     (side panel > Roadmap), where you set each idea to Idea / Planned / In progress / Done.
+   - YouTube is on the Apps shelf. The first launch installs its own packages and can take a minute.
+     It uses Windows' Edge WebView2 - the start file installs it too if it is missing.
+     X + B together on the controller closes YouTube.
+
+Already used an older version? On first start it copies your library, covers, settings and YouTube
+sign-in from %APPDATA%\GameLauncher into this folder (the old files are left as a backup).
+
+If something goes wrong, look in the Logs folder (and Apps\YouTube\app.log) and send what's in there.
+See README.md for controls, keyboard shortcuts and the folder layout.

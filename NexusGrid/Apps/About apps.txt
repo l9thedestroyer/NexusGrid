@@ -1,0 +1,2 @@
+Each folder here with a main.py becomes a tile on Big Picture's Apps shelf.
+YouTube/ is the bundled YouTube app. X + B closes an app on the controller.

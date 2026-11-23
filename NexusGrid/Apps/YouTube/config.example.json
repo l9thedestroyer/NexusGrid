@@ -1,0 +1,22 @@
+{
+  "fullscreen": true,
+  "stick_deadzone": 12000,
+  "repeat_delay": 0.18,
+  "invert_stick_y": true,
+  "invert_stick_x": false,
+  "button_action_map": {
+    "BTN_SOUTH": "activate",
+    "BTN_EAST": "back",
+    "BTN_NORTH": "search",
+    "BTN_WEST": "playpause",
+    "BTN_TL": "seek_back",
+    "BTN_TR": "seek_forward",
+    "BTN_START": "top",
+    "BTN_SELECT": "toggle_help"
+  },
+  "dpad_action_map": {
+    "up": "fullscreen",
+    "left": "seek_back",
+    "right": "seek_forward"
+  }
+}
