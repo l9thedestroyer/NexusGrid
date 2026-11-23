@@ -1,59 +1,121 @@
+# Nexus Grid
 
-NEXUS GRID
-==========
+**Nexus Grid** is an all-in-one, local-first PC game launcher built in Python with **PySide6**, designed for smooth desktop library management and an Xbox-inspired **Big Picture** couch experience.
 
-Everything Nexus Grid uses lives in this folder (Documents/NexusGrid):
+---
 
-  Config/settings.ini   your settings (the Settings screen edits this; safe to back up)
-  Data/profile.json     your profile: name, bio, avatar colour, achievements
-  Data/roadmap.json     the status you gave each Roadmap item
-  Data/library.json     your game list, favourites, notes, playtime
-  Data/folders.json     your folders (e.g. one per creator)
-  Data/covers, thumbs   cover art and its fast-loading thumbnail cache (thumbs can be deleted any time)
-  Apps/                 apps shown on Big Picture's "Apps" shelf (YouTube is included)
-  Games/                drop game folders here; Scan offers to add them
-  Logs/                 error.log, crash.log, qt.log - send these if something breaks
+## Key Features
 
-APPS
-----
-Apps/YouTube is the YouTube app (real youtube.com in Windows' Edge WebView2, with controller support).
-  - X + B together on the controller closes it. Settings > YouTube has more options.
-  - Copy Apps/YouTube/config.example.json to config.json to change its settings.
-Any other folder in Apps/ that contains a main.py is shown as an extra tile on the Apps shelf
-(started with Python; its output is written to app.log inside that folder).
+### Unified Game Library & Smart Scanning
+* **Multi-Store Auto-Detection:** Automatically scans local installations for **Steam**, **Epic Games**, **GOG**, and **Ubisoft Connect**.
+* **Batch Folder & Manual `.exe` Importer:** Point Nexus Grid at one or multiple parent folders (`+ Add folder`). It automatically filters out installers, uninstallers, crash handlers, redistributables, and engine runtimes (e.g., Ren'Py `lib`/`renpy` or Unreal `Engine` subfolders) to select the real game executable.
+* **Custom Folders / Collections:** Organize games into custom folders (such as grouping by creator, genre, or status) that you can click into just like Steam collections.
+* **Playtime Tracking:**
+  * Reads existing playtime and last-played timestamps directly from Steam's local `localconfig.vdf`.
+  * Tracks playtime automatically in the background for Epic, GOG, Ubisoft, and manually added `.exe` games by monitoring active processes inside each game's install directory.
 
-GAMES
------
-  - Settings > Library > Saved game folders lists the folders Scan checks (Games/ is included).
-  - "+ Add game" adds a single .exe, or imports a whole folder of games.
-  - Folders: "+ New folder", then drag games onto it or right-click > Move to folder.
+### Artwork, Views & Customization
+* **Automatic Cover Art & Icon Fallbacks:**
+  * Pulls Steam's local artwork cache automatically.
+  * Fetches real poster art for non-Steam games via **SteamGridDB** (optional free API key) with Steam store fallback and intelligent title cleaning.
+  * Generates purple/blue gradient cards from each game's `.exe` icon when no poster is available, and supports custom user-assigned cover images.
+* **Flexible Views & Auto-Scaling Grid:**
+  * Switch between a **Grid View** (where tiles automatically scale to fill window width cleanly with no right-hand gaps) and a **List View**.
+  * Filter by store, favorites, or custom folders; sort alphabetically, by recently played, or by most played; and search instantly.
+* **Purple Aesthetic & Custom Branding:** Features a deep purple theme with customizable accent colors, embedded Nexus Grid branding, and a lightweight startup splash screen.
 
-KEYBOARD
---------
-  Enter open/play    Backspace back    Ctrl+F search    Ctrl+D favourite    F10 Big Picture    F11 fullscreen
-  In Big Picture: arrows move, Enter plays, I details, F favourite, Tab side panel, Esc menu/back.
+### Xbox-Style Big Picture Mode & Integrated Apps
+* **Console-Style Home Screen:** Launch into **Big Picture Mode** with a smooth transition animation. Features a clean, ad-free Xbox-inspired layout with a featured/recent tile row, quick-access shortcuts, a full **Games** grid, a dedicated **Apps** section, and a quick side panel (`Right Stick Click`).
+* **Smart Resource & Tray Management:**
+  * In **Desktop Mode**, launching a game hides Nexus Grid to the system tray and automatically restores it once the game exits.
+  * In **Big Picture Mode**, Nexus Grid stays open in the background on minimal resources while a game runs so you return immediately upon exiting.
+* **Integrated Desktop YouTube App:** Launches a dedicated Python + `pywebview` (Edge WebView2) YouTube experience (`NexusGrid/Apps/YouTube`) supporting standard `youtube.com`, full Google account sign-in, fullscreen playback, and Xbox controller navigation.
 
-CONTROLLER (Xbox / XInput)
---------------------------
-  Library: D-pad/left stick move, A open, B back, X favourite, Y sort, LB/RB filter, Start options, Select menu.
-  Profile: your name and title, bio, G score, level, 28 achievements, activity feed, stats charts, badges and titles,
-    a showcase of pinned games/achievements, weekly goals and a Year in Review (Big Picture: the avatar, or the side panel > Profile;
-    desktop: the Profile button). Text entry in Big Picture uses an on-screen keyboard (A type, X delete, Y shift,
-    Start done, B cancel). Search is the magnifier in Big Picture's icon bar (or press / on a keyboard).
-  Big Picture: D-pad/stick move (Up reaches the icon bar, Down the shortcut tiles), A play/open, B back,
-    Y details, X favourite, Start options, Select menu, LB/RB jump 5 tiles,
-    click the RIGHT STICK to open the side panel (Friends, Messages, Games, Apps, Settings).
-    In the panel's Settings, left/right changes a value (accent colour, animations, ...), A toggles.
+### Native XInput Controller & Keyboard Navigation
+* **Zero-Config XInput Support:** Uses Windows' built-in XInput via `ctypes`—no extra controller libraries required.
+* **Smart Hint Visibility:** Controller button prompts stay hidden until an actual physical controller input is detected (preventing virtual/phantom controllers from cluttering the UI).
+* **Controller-Support Pre-Launch Check:** Before launching a game with a controller (`A`), Nexus Grid checks whether the title has controller support and warns you first if it doesn't (with a *"Don't ask again for this game"* option).
 
-ROADMAP
--------
-Big Picture side panel > Roadmap (or Select > Roadmap, or Settings > Open the Roadmap) lists every idea for
-what to build next, grouped by where it would live, with a status you control: Idea, Planned, In progress, Done.
-Left/Right changes a status, X stars a priority, LB/RB filters. Anything still marked "SOON" in the app (side panel
-entries, home shortcut tiles, extra profile tabs, game page chips, extra Apps tiles, extra settings) opens its
-Roadmap entry when you press A on it.
+### Profile & Roadmap
+* **User Profile:** Includes a customizable profile with bio, gaming stats, recent activity, badges & titles, showcase, goals, and a Year in Review.
+* **Built-In Roadmap:** Tracks upcoming features and ideas alongside their development status.
 
-MOVING TO A NEW PC
-------------------
-Copy the whole NexusGrid folder to the same place on the new PC (game paths are stored as full paths,
-so games must be in the same locations; covers and settings come along).
+---
+
+## Folder Structure
+
+Nexus Grid keeps its configuration, artwork cache, apps, and documentation organized inside your `Documents` directory:
+
+```text
+Documents/
+└── NexusGrid/
+    ├── Apps/
+    │   └── YouTube/        # Integrated controller-friendly YouTube app
+    ├── Config/             # Settings, library data, and cached thumbnails
+    └── Docs/               # Documentation and guides
+```
+
+*(Note: Legacy library data from `%APPDATA%/GameLauncher` is preserved/migrated seamlessly.)*
+
+---
+
+## Getting Started
+
+### Requirements
+* **OS:** Windows 10 / 11
+* **Python:** **Python 3.13.16** (recommended; the launcher startup script can prompt before downloading and installing the exact `3.13.16` release)
+* **Dependencies:** `PySide6`, `psutil` (automatically installed on first run if missing)
+
+### Running Nexus Grid
+1. Clone or download this repository.
+2. Run the launcher via the provided start script or directly with Python:
+   ```bash
+   python game_launcher.py
+   ```
+   *(When launched with `python.exe`, Nexus Grid automatically relaunches itself under `pythonw.exe` so no background terminal window stays open.)*
+
+---
+
+## Controls
+
+### Controller (Xbox / XInput)
+| Input | Action |
+| :--- | :--- |
+| **D-Pad / Left Stick** | Navigate grid, menus, and dialogs |
+| **Right Stick** | Smooth scroll |
+| **Right Stick Click (R3)** | Toggle Big Picture side panel |
+| **A** | Launch selected game / Confirm |
+| **B** | Clear search / Cancel / Back |
+| **X** | Toggle Favorite |
+| **Y** | Cycle Sort order |
+| **LB / RB** | Switch filter tabs |
+| **LT / RT** | Page Up / Page Down |
+| **Start** | Open game options menu |
+| **Back / Select** | Toggle Fullscreen |
+
+### Keyboard Shortcuts
+| Key | Action |
+| :--- | :--- |
+| **Arrow Keys** | Navigate games |
+| **Enter** | Launch selected game |
+| **Type anywhere** | Jump straight into search |
+| **Ctrl + F** | Focus search bar |
+| **Ctrl + D** | Toggle Favorite |
+| **Shift + F10 / Menu** | Open context menu |
+| **F11** | Toggle borderless fullscreen |
+| **Esc** | Clear search |
+
+---
+
+## Settings & Configuration
+* **Startup & Tray Behavior:** Configure whether closing the window quits the app or minimizes to the system tray, and toggle **Start with Windows**.
+* **SteamGridDB Integration:** Open **Covers -> Get a free API key** to generate a SteamGridDB key and enable automatic poster downloads for non-Steam and indie games.
+* **Appearance:** Adjust default tile minimum sizes and customize the UI accent color.
+
+---
+
+## License
+
+This project is licensed under the **GNU General Public License v3.0 (GPLv3)**.
+
+You are free to use, study, modify, and distribute this software, provided that any distributed modifications or derivative works are also made available under the **GPLv3** license with their full source code disclosed.
